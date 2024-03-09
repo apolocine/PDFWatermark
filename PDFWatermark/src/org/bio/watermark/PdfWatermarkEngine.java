@@ -1,8 +1,22 @@
 package org.bio.watermark;
 
+//import com.itextpdf.text.Document;
+//import com.itextpdf.text.Paragraph;
+//import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
@@ -10,6 +24,7 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
+
 
 /**
  * Dr Hamid MADANI mailto: drmdh@msn.com
@@ -45,7 +60,7 @@ public class PdfWatermarkEngine {
 				content.showTextAligned(Element.ALIGN_CENTER, watermarkText, 300, 400, 45);
 				content.endText();
 
-				if (imagePath != null) {
+				if (imagePath != null && new File(imagePath).isFile()) {
 					try {
 						// Add image watermark
 						Image watermarkImage = Image.getInstance(imagePath);
@@ -83,4 +98,36 @@ public class PdfWatermarkEngine {
 
 	}
 
+	
+	
+
+	public static String  convertTextToPdf(String inputTextFile, String outputPdfFile) throws IOException {
+		// Obtenez le répertoire du fichier original
+		String originalFileDir = inputTextFile.substring(0, inputTextFile.lastIndexOf(File.separator));
+		File modifiedFile = new File(originalFileDir, outputPdfFile);
+		
+	        try (
+	        		
+	        		
+	        	BufferedReader reader = new BufferedReader(new FileReader(inputTextFile));
+	             PdfDocument pdfDoc = new PdfDocument(new PdfWriter(modifiedFile.getAbsoluteFile()));
+	             Document document = new Document(pdfDoc)) {
+	        	 
+	            PdfFont font = PdfFontFactory.createFont();
+	            Paragraph paragraph;
+
+	            String line;
+	            while ((line = reader.readLine()) != null) {
+	                paragraph = new Paragraph(line)
+	                        .setFont(font)
+	                        .setFontSize(12)
+	                        .setFontColor(ColorConstants.BLACK);
+	                document.add(paragraph);
+	            }
+	        }
+	        
+	        return modifiedFile.getAbsolutePath();
+	    }
+	   
+	 
 }

@@ -26,6 +26,7 @@ public class PdfWatermarkIHM extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JTextField inputTextField;
 	private JTextField inputPdfField;
 	private JTextField watermarkTextField;
 	private JTextField watermarkImageField;
@@ -34,13 +35,30 @@ public class PdfWatermarkIHM extends JFrame {
 	public PdfWatermarkIHM() {
 		setTitle("PDF Watermark App");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
+		//Text field
+		inputTextField= new JTextField(20);
 		// Création des composants Swing
 		inputPdfField = new JTextField(20);
 		watermarkTextField = new JTextField("CONFIDENTIAL", 20);
 		watermarkImageField = new JTextField(20);
 		outputPdfField = new JTextField(20);
 
+		JButton browseTextButton = new JButton("Browse Txt");
+		browseTextButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				browseInputTextFile();
+			}
+		});
+		
+		JButton convert2PdftButton = new JButton("Convert2Pdft");
+		convert2PdftButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				convert2Pdf() ;
+			}
+		});
 		JButton browseButton = new JButton("Browse");
 		browseButton.addActionListener(new ActionListener() {
 			@Override
@@ -49,7 +67,7 @@ public class PdfWatermarkIHM extends JFrame {
 			}
 		});
 
-		JButton photoButton = new JButton("Browse Ph");
+		JButton photoButton = new JButton("Browse Image");
 		photoButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -74,6 +92,10 @@ public class PdfWatermarkIHM extends JFrame {
 		});
 
 		// Ajout des composants à la fenêtre
+		add(new JLabel("Text File:"));
+		add(inputTextField);
+		add(browseTextButton);
+		add(convert2PdftButton);
 		add(new JLabel("Input PDF File:"));
 		add(inputPdfField);
 		add(browseButton);
@@ -94,6 +116,18 @@ public class PdfWatermarkIHM extends JFrame {
 		setVisible(true);
 	}
 
+
+	private void browseInputTextFile() {
+		JFileChooser fileChooser = new JFileChooser();
+		int result = fileChooser.showOpenDialog(this);
+
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = fileChooser.getSelectedFile();
+			inputTextField.setText(selectedFile.getAbsolutePath());
+		}
+	}
+	
+	
 	private void browseInputPdf() {
 		JFileChooser fileChooser = new JFileChooser();
 		int result = fileChooser.showOpenDialog(this);
@@ -138,10 +172,27 @@ public class PdfWatermarkIHM extends JFrame {
 			System.out.println("Desktop n'est pas pris en charge sur cette plate-forme.");
 		}
 	}
-
+	private void convert2Pdf() {
+		String inputTextPath = inputTextField.getText();
+		long interval = 21;
+		Random rnd = new Random(interval);
+		long result = rnd.nextLong();
+		String tmpOutputPdfPath = result + "input.pdf";
+		try {
+			
+			String inputTextPathC = PdfWatermarkEngine.convertTextToPdf(inputTextPath, tmpOutputPdfPath);
+			inputPdfField.setText(inputTextPathC);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
 	private void applyWatermark() {
 		String inputPdfPath = inputPdfField.getText();
-		long interval = 15421;
+		long interval = 21;
 		Random rnd = new Random(interval);
 		long result = rnd.nextLong();
 		String tmpOutputPdfPath = result + "output.pdf";
