@@ -3,8 +3,6 @@
 **PDFWatermark** est un outil puissant pour personnaliser des fichiers PDF en ajoutant des éléments graphiques et textuels. Il prend en charge les filigranes, la signature électronique, et l'insertion d'images ou de textes.
 
 ---
-<img src="PDFWatermark/screenapp1.png" alt="Interface utilisateur" width="400">
-
 ## **Fonctionnalités principales**
 
 ### 1. Ajout de filigranes (watermark)
@@ -57,6 +55,7 @@
 - **Position** : Bas à droite  
 
 ---
+<img src="PDFWatermark/screenapp1.png" alt="Interface utilisateur" width="400">
 
 ### **Besoin d'aide pour le développement ?**
-Je peux fournir une base de code en Python avec des bibliothèques comme `PyPDF2`, `FPDF`, ou `ReportLab` pour vous aider à créer votre propre outil **PDFWatermark**. 😊
+code en Python avec des bibliothèques comme `PyPDF2`, `FPDF`, ou `ReportLab` pour vous aider à créer  **PDFWatermark**. 😊
