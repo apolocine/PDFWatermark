@@ -3,6 +3,7 @@
 **PDFWatermark** est un outil puissant pour personnaliser des fichiers PDF en ajoutant des éléments graphiques et textuels. Il prend en charge les filigranes, la signature électronique, et l'insertion d'images ou de textes.
 
 ---
+<img src="PDFWatermark/screenapp1.png" alt="Interface utilisateur" width="400">
 
 ## **Fonctionnalités principales**
 
